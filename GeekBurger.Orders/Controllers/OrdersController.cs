@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.JsonPatch;
+using GeekBurger.Orders.Model;
 
 namespace GeekBurger.Orders.Controllers
 {
@@ -12,8 +14,8 @@ namespace GeekBurger.Orders.Controllers
     public class OrdersController : Controller
     {
 
-        private IOrdersRepository _ordersRepository;
-        private IMapper _mapper;
+        //private IOrdersRepository _ordersRepository;
+        //private IMapper _mapper;
 
         [HttpGet("{id}", Name = "GetOrdersByOrderId")]
         public IActionResult GetOrdersByOrderId(Guid orderId)
