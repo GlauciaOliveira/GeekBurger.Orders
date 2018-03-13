@@ -10,10 +10,10 @@ namespace GeekBurger.Orders.Model
     public class Order
     {
         [Key]
-        public int OrderId { get; set; }
+        public Guid OrderId { get; set; }
         public DateTime RequestDate { get; set; }
         public DateTime DeliverDate { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public string OrderStatus { get; set; }
         public List<ProductToGet> Products { get; set; } = new List<ProductToGet>();
 
     }

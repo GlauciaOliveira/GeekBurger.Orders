@@ -6,10 +6,10 @@ namespace GeekBurger.Orders.Contract
 {
     public class Order
     {
-        public int OrderId { get; set; }
+        public Guid OrderId { get; set; }
         public DateTime RequestDate { get; set; }
         public DateTime DeliverDate { get; set; }
-        public OrderStatus OrderStatus { get; set; }
-        public List<ProductToGet> Products { get; set; }
+        public string OrderStatus { get; set; }
+        public List<Product> Products { get; set; }
     }
 }

@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.JsonPatch;
 using GeekBurger.Orders.Model;
+using GeekBurger.Orders.Repository;
+using AutoMapper;
+using GeekBurger.Orders.Helper;
 
 namespace GeekBurger.Orders.Controllers
 {
@@ -14,25 +17,87 @@ namespace GeekBurger.Orders.Controllers
     public class OrdersController : Controller
     {
 
-        //private IOrdersRepository _ordersRepository;
-        //private IMapper _mapper;
+        private IOrdersRepository _ordersRepository;
+        private IMapper _mapper;
 
-        [HttpGet("{id}", Name = "GetOrdersByOrderId")]
-        public IActionResult GetOrdersByOrderId(Guid orderId)
+        public OrdersController(IOrdersRepository ordersRepository, IMapper mapper)
         {
-            return Ok();
+            _ordersRepository = ordersRepository;
+            _mapper = mapper;
+        }
+
+        [HttpPost()]
+        public IActionResult AddOrder([FromBody] Order orderAdd)
+        {
+            if (orderAdd == null)
+                return BadRequest();
+
+            var order = _mapper.Map<Order>(orderAdd);
+
+            if (order.OrderId == Guid.Empty)
+                return new UnprocessableEntityResult(ModelState);
+
+            _ordersRepository.Add(order);
+            _ordersRepository.Save();
+
+            var orderToGet = _mapper.Map<Order>(order);
+
+            return CreatedAtRoute("GetOrder",
+                new { id = orderToGet.OrderId },
+                orderToGet);
+        }
+
+        [HttpGet("{id}", Name = "GetOrderById")]
+        public IActionResult GetOrderById(Guid orderId)
+        {
+            var order = _ordersRepository.GetOrderById(orderId);
+
+            var productToGet = _mapper.Map<Order>(order);
+
+            return Ok(productToGet);
         }
 
         [HttpPatch("{id}")]
-        public IActionResult UpdateStatusOrder(Guid orderId, [FromBody] JsonPatchDocument<Order> order)
+        public IActionResult UpdateOrder(Guid orderId, [FromBody] JsonPatchDocument<Order> orderPatch)
         {
-            return Ok();
+            Order order;
+
+            if (orderPatch == null)
+                return BadRequest();
+
+            order = _ordersRepository.GetOrderById(orderId);
+
+            if (orderId == null || order == null)
+            {
+                return NotFound();
+            }
+
+            var orderToUpdate = _mapper.Map<Order>(order);
+            orderPatch.ApplyTo<Order>(orderToUpdate, ModelState);
+
+            order = _mapper.Map(orderToUpdate, order);
+
+            if (order.OrderId == Guid.Empty)
+                return new UnprocessableEntityResult(ModelState);
+
+            _ordersRepository.Update(order);
+            _ordersRepository.Save();
+
+            var orderToGet = _mapper.Map<Order>(order);
+
+            return CreatedAtRoute("GetOrder",
+                new { id = orderToGet.OrderId },
+                orderToGet);
         }
 
         [HttpPost()]
         public IActionResult GetAllOrders()
         {
-            return Ok();
+            var orders = _ordersRepository.ListAllOrders();
+
+            var listOrders = _mapper.Map<IEnumerable<Order>>(orders);
+
+            return Ok(listOrders);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace GeekBurger.Orders.Contract
 {
     public class OrderStatus
     {
-        enum Status
+        public enum Status
         {
             Aberto,
             Andamento,
