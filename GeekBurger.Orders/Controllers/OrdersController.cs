@@ -90,12 +90,12 @@ namespace GeekBurger.Orders.Controllers
                 orderToGet);
         }
 
-        [HttpPost()]
+        [HttpGet()]
         public IActionResult GetAllOrders()
         {
             var orders = _ordersRepository.ListAllOrders();
 
-            var listOrders = _mapper.Map<IEnumerable<Order>>(orders);
+            var listOrders = _mapper.Map<List<Order>>(orders);
 
             return Ok(listOrders);
         }

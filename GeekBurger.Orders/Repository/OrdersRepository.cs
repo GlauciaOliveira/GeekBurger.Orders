@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using GeekBurger.Orders.Model;
 using GeekBurger.Orders.Service;
+using Microsoft.EntityFrameworkCore;
+
+
 
 namespace GeekBurger.Orders.Repository
 {
@@ -35,7 +38,9 @@ namespace GeekBurger.Orders.Repository
 
         public List<Order> ListAllOrders()
         {
-            return _context.Order.ToList();
+            return _context.Order
+                            .Include("Products")
+                            .ToList();
         }
 
         public void Save()

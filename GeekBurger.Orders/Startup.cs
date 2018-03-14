@@ -11,6 +11,7 @@ using GeekBurger.Orders.Repository;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Swashbuckle.AspNetCore.Swagger;
+using GeekBurger.Orders.Extension;
 
 namespace GeekBurger.Orders
 {
@@ -24,7 +25,7 @@ namespace GeekBurger.Orders
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Products", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "Orders", Version = "v1" });
             });
 
             services.AddAutoMapper();
@@ -36,7 +37,7 @@ namespace GeekBurger.Orders
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, OrdersContext ordersContext)
         {
             if (env.IsDevelopment())
             {
@@ -52,7 +53,7 @@ namespace GeekBurger.Orders
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            //ordersContext.Seed();
+            ordersContext.Seed();
         }
     }
 }
