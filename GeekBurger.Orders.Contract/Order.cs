@@ -10,6 +10,8 @@ namespace GeekBurger.Orders.Contract
         public DateTime RequestDate { get; set; }
         public DateTime DeliverDate { get; set; }
         public string OrderStatus { get; set; }
+        public string OrderStatusPagamento { get; set; }
         public List<Product> Products { get; set; }
+     
     }
 }
