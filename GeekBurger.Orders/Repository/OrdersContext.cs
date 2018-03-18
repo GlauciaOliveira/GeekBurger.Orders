@@ -15,6 +15,6 @@ namespace GeekBurger.Orders.Repository
         }
 
         public DbSet<Order> Order { get; set; }
-        //public DbSet<OrderStatus> OrderStatus { get; set; }
+
     }
 }
