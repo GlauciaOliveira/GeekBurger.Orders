@@ -6,20 +6,18 @@ using GeekBurger.Orders.Model;
 using GeekBurger.Orders.Service;
 using Microsoft.EntityFrameworkCore;
 
-
-
 namespace GeekBurger.Orders.Repository
 {
     public class OrdersRepository : IOrdersRepository
     {
 
         private OrdersContext _context;
-        private IOrderChangedService _orderChangedService;
+        private IOrderPaidService _orderPaidService;
 
-        public OrdersRepository(OrdersContext context, IOrderChangedService orderChangedService)
+        public OrdersRepository(OrdersContext context, IOrderPaidService orderPaidService)
         {
             _context = context;
-            _orderChangedService = orderChangedService;
+            _orderPaidService = orderPaidService;
         }
 
         public bool Add(Order order)
@@ -39,18 +37,18 @@ namespace GeekBurger.Orders.Repository
         public List<Order> ListAllOrders()
         {
             return _context.Order
-                            .Include("Products")
+                            .Include("Orders")
                             .ToList();
         }
 
         public void Save()
         {
-            _orderChangedService
+            _orderPaidService
                 .AddToMessageList(_context.ChangeTracker.Entries<Order>());
 
             _context.SaveChanges();
 
-            _orderChangedService.SendMessagesAsync();
+            _orderPaidService.SendMessagesAsync();
         }
 
         public bool Update(Order order)
