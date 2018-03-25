@@ -42,7 +42,7 @@ namespace GeekBurger.Orders.Service
                 _namespace.Topics.Define(Topic)
                     .WithSizeInMB(1024).Create();
 
-        }
+        } 
 
 
         public void AddToMessageList(IEnumerable<EntityEntry<Order>> changes)
