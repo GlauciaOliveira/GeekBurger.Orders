@@ -24,6 +24,27 @@ namespace GeekBurger.Orders.Service
         private Task _lastTask;
         private IServiceBusNamespace _namespace;
 
+
+        public OrderPaidService(IMapper mapper, IConfiguration configuration)
+        {
+            _mapper = mapper;
+            _configuration = configuration;
+            _messages = new List<Message>();
+            _namespace = _configuration.GetServiceBusNamespace();
+            EnsureTopicIsCreated();
+        }
+
+        public void EnsureTopicIsCreated()
+        {
+            if (!_namespace.Topics.List()
+                .Any(topic => topic.Name
+                    .Equals(Topic, StringComparison.InvariantCultureIgnoreCase)))
+                _namespace.Topics.Define(Topic)
+                    .WithSizeInMB(1024).Create();
+
+        }
+
+
         public void AddToMessageList(IEnumerable<EntityEntry<Order>> changes)
         {
             _messages.AddRange(changes
