@@ -52,9 +52,9 @@ namespace GeekBurger.Orders.Controllers
         {
             var order = _ordersRepository.GetOrderById(orderId);
 
-            var productToGet = _mapper.Map<Order>(order);
+            var orderToGet = _mapper.Map<Order>(order);
 
-            return Ok(productToGet);
+            return Ok(orderToGet);
         }
 
         [HttpPatch("{id}")]
