@@ -11,7 +11,7 @@ namespace GeekBurger.Orders.Helper
     {
         public AutomapperProfile()
         {
-            CreateMap<OrderPaidToUpsert, Order>().AfterMap<MatchStoreFromRepository>();
+            CreateMap<OrderPaidToUpsert, Order>();
             CreateMap<Order, OrderPaidToUpsert>();
             CreateMap<Order, OrderPaidToGet>();
         }
