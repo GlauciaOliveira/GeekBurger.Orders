@@ -32,7 +32,6 @@ namespace GeekBurger.Orders
 
             services.AddDbContext<OrdersContext>(o => o.UseInMemoryDatabase("geekburger-orders"));
             services.AddScoped<IOrdersRepository, OrdersRepository>();
-            //services.AddScoped<IStoreRepository, StoreRepository>();
             services.AddSingleton<IOrderPaidService, OrderPaidService>();
         }
 

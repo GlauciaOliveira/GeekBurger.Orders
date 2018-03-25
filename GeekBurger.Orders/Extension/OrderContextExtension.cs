@@ -14,11 +14,11 @@ namespace GeekBurger.Orders.Extension
 
             context.Order.RemoveRange(context.Order);
             context.SaveChanges();
-           /* context.Order.AddRange(new List<Order> {
-                new Order { OrderId = Guid.NewGuid(), RequestDate = DateTime.Now, OrderStatus = OrderStatus.Status.Aberto.ToString() ,Products = produtos1},
-                new Order { OrderId = Guid.NewGuid(), RequestDate = DateTime.Now, OrderStatus = OrderStatus.Status.Andamento.ToString() ,Products = produtos2},
-                new Order { OrderId = Guid.NewGuid(), RequestDate = DateTime.Now, OrderStatus = OrderStatus.Status.Finalizado.ToString() ,Products = produtos3}
-            });*/
+            context.Order.AddRange(new List<Order> {
+                new Order { OrderId = Guid.NewGuid(), RequestDate = DateTime.Now, PaymentDate =  DateTime.Now, OrderStatus="Pendente"},
+                new Order { OrderId = Guid.NewGuid(), RequestDate = DateTime.Now, PaymentDate =  DateTime.Now, OrderStatus="Finalizado"},
+                new Order { OrderId = Guid.NewGuid(), RequestDate = DateTime.Now, PaymentDate =  DateTime.Now, OrderStatus="Pendente"}
+            });
 
             context.SaveChanges();
         }
