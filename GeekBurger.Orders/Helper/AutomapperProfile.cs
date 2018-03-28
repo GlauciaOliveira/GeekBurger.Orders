@@ -9,8 +9,8 @@ namespace GeekBurger.Orders.Helper
         public AutomapperProfile()
         {
   
-            CreateMap<Order, OrderPaidToUpsert>();
-            CreateMap<Order, OrderPaidToGet>();
+            CreateMap<Order, OrderToUpsert>();
+            CreateMap<Order, Contract.OrderToGet>();
         }
     }
 }

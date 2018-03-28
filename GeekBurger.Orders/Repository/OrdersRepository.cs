@@ -51,6 +51,11 @@ namespace GeekBurger.Orders.Repository
             _orderPaidService.SendMessagesAsync();
         }
 
+        public void Delete(Order order)
+        {
+            _context.Order.Remove(order);
+        }
+
         public bool Update(Order order)
         {
             throw new NotImplementedException();

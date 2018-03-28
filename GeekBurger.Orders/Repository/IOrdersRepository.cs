@@ -13,6 +13,7 @@ namespace GeekBurger.Orders.Repository
         List<Order> ListAllOrders();
         bool Add(Order order);
         bool Update(Order order);
+        void Delete(Order order);
         void Save();
     }
 }
